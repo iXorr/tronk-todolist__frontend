@@ -5,21 +5,12 @@ export default defineNuxtConfig({
     "@nuxt/ui"
   ],
 
-  devtools: {
-    enabled: true
-  },
-
   css: ["~/assets/css/main.css"],
 
   runtimeConfig: {
     public: {
-      // Будет переопределён env-переменной NUXT_PUBLIC_API_BASE
       apiBase: "http://localhost/api"
     }
-  },
-
-  routeRules: {
-    "/": { prerender: true }
   },
 
   compatibilityDate: "2026-06-30",
