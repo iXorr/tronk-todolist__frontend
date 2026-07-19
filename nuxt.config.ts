@@ -11,6 +11,13 @@ export default defineNuxtConfig({
 
   css: ["~/assets/css/main.css"],
 
+  runtimeConfig: {
+    public: {
+      // Backend API base. Override via NUXT_PUBLIC_API_BASE env var.
+      apiBase: "http://localhost/api"
+    }
+  },
+
   routeRules: {
     "/": { prerender: true }
   },
@@ -23,7 +30,8 @@ export default defineNuxtConfig({
         indent: 2,
         quotes: "double",
         commaDangle: "never",
-        braceStyle: "1tbs"
+        braceStyle: "1tbs",
+        semi: true
       }
     }
   }
