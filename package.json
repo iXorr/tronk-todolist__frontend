@@ -7,15 +7,16 @@
     "dev": "nuxt dev --host",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint . --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "typecheck": "nuxt typecheck"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.114",
-    "@iconify-json/simple-icons": "^1.2.87",
-    "@nuxt/ui": "^4.9.0",
-    "nuxt": "^4.4.8",
-    "tailwindcss": "^4.3.1"
+    "@iconify-json/lucide": "^1.2.118",
+    "@iconify-json/simple-icons": "^1.2.91",
+    "@nuxt/ui": "^4.10.0",
+    "nuxt": "^4.5.0",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@nuxt/eslint": "^1.16.0",

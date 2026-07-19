@@ -13,7 +13,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      // Backend API base. Override via NUXT_PUBLIC_API_BASE env var.
+      // Будет переопределён env-переменной NUXT_PUBLIC_API_BASE
       apiBase: "http://localhost/api"
     }
   },
@@ -35,4 +35,4 @@ export default defineNuxtConfig({
       }
     }
   }
-})
+});
