@@ -9,10 +9,10 @@ useHead({
   htmlAttrs: {
     lang: "en"
   }
-})
+});
 
-const title = "Nuxt Starter Template"
-const description = "A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours."
+const title = "Nuxt Starter Template";
+const description = "A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours.";
 
 useSeoMeta({
   title,
@@ -21,7 +21,7 @@ useSeoMeta({
   ogDescription: description,
   ogImage: "https://ui.nuxt.com/assets/templates/nuxt/starter-light.png",
   twitterCard: "summary_large_image"
-})
+});
 </script>
 
 <template>
