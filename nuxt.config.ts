@@ -15,6 +15,18 @@ export default defineNuxtConfig({
 
   compatibilityDate: "2026-06-30",
 
+  vite: {
+    server: {
+      fs: {
+        allow: ["/app"]
+      },
+      watch: {
+        usePolling: true,
+        interval: 1000
+      }
+    }
+  },
+
   eslint: {
     config: {
       stylistic: {

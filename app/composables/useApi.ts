@@ -35,7 +35,7 @@ export function useApi() {
   });
 
   async function getCurrentUser() {
-    return $api<{ data: User }>("/user");
+    return $api<User>("/user");
   }
 
   async function login(email: string, password: string) {

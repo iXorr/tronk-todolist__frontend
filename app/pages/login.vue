@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { FormErrorEvent, FormSubmitEvent } from "@nuxt/ui";
 import type { LoginInput } from "~/utils/schemas";
 import { loginSchema } from "~/utils/schemas";
 
@@ -7,31 +8,48 @@ definePageMeta({
 });
 
 const { login } = useAuth();
-const { toastError } = useToastNotification();
+const { toastSuccess, toastError } = useToastNotification();
 
-const formRef = useFormRef();
+const form = useTemplateRef("form");
 
 const state = reactive<LoginInput>({
   email: "",
   password: ""
 });
 
-async function onSubmit({ data }: { data: LoginInput }) {
+const loading = ref(false);
+
+async function onSubmit(event: FormSubmitEvent<LoginInput>) {
+  loading.value = true;
+  form.value?.clear();
+
   try {
-    await login(data.email, data.password);
+    await login(event.data.email, event.data.password);
+    toastSuccess("Добро пожаловать!");
     await navigateTo("/tasks");
   } catch (err: unknown) {
     const fetchErr = err as { statusCode?: number; data?: { message?: string; errors?: Record<string, string[]> } };
 
     if (fetchErr.statusCode === 422 && fetchErr.data?.errors) {
-      const formErrors = Object.entries(fetchErr.data.errors).flatMap(([name, messages]) =>
-        messages.map(message => ({ name, message }))
+      form.value?.setErrors(
+        Object.entries(fetchErr.data.errors).flatMap(([name, messages]) =>
+          messages.map((message, index) => ({
+            id: `${name}-${index}`,
+            name,
+            message
+          }))
+        )
       );
-      formRef.value?.setErrors(formErrors);
     } else {
       toastError(fetchErr.data?.message ?? "Ошибка входа. Проверьте данные.");
     }
+  } finally {
+    loading.value = false;
   }
+}
+
+function onError(event: FormErrorEvent) {
+  console.log("Form validation errors:", event.errors);
 }
 </script>
 
@@ -45,11 +63,12 @@ async function onSubmit({ data }: { data: LoginInput }) {
       </template>
 
       <UForm
-        ref="formRef"
+        ref="form"
         :schema="loginSchema"
         :state="state"
         class="flex flex-col gap-4"
         @submit="onSubmit"
+        @error="onError"
       >
         <UFormField
           name="email"
@@ -58,7 +77,10 @@ async function onSubmit({ data }: { data: LoginInput }) {
           <UInput
             v-model="state.email"
             type="text"
-            placeholder="Email"
+            placeholder="your@email.com"
+            icon="i-lucide-mail"
+            :disabled="loading"
+            autocomplete="email"
           />
         </UFormField>
 
@@ -70,12 +92,16 @@ async function onSubmit({ data }: { data: LoginInput }) {
             v-model="state.password"
             type="password"
             placeholder="Пароль"
+            icon="i-lucide-lock"
+            :disabled="loading"
+            autocomplete="current-password"
           />
         </UFormField>
 
         <UButton
           type="submit"
           block
+          :loading="loading"
         >
           Войти
         </UButton>

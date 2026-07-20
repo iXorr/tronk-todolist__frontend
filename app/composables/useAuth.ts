@@ -38,8 +38,7 @@ export function useAuth() {
 
   async function fetchUser() {
     try {
-      const response = await getCurrentUser();
-      user.value = response.data;
+      user.value = await getCurrentUser();
     } catch {
       user.value = null;
       throw new Error("Failed to fetch user");
